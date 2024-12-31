@@ -48,11 +48,14 @@ class SudokuSolver {
   solve(puzzleString) {
     let validPuzzle = this.validate(puzzleString);
     if (validPuzzle !== true) return validPuzzle;
-    
+
+
     let puzzle = puzzleString.split('');
+    let timeout = Date.now() + 2000;
     for (let i = 0; i < 81; i++) {
       if (puzzle[i] === '.') {
         for (let val = 1; val <= 9; val++) {
+          if (Date.now() > timeout) return false;
           if (this.checkRowPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString()) &&
               this.checkColPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString()) &&
               this.checkRegionPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString())) {
