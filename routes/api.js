@@ -11,13 +11,13 @@ module.exports = function (app) {
       return res.json({ error: "Required field(s) missing" });
     }
 
-    // Check if coordinate is valid
     const coordinatePattern = /^[A-I][1-9]$/;
     if (!coordinatePattern.test(coordinate)) {
       return res.json({ error: "Invalid coordinate" });
     }
 
-    if (value < 1 || value > 9) {
+    const number = Number(value);
+    if (isNaN(number) || number < 1 || number > 9) {
       return res.json({ error: "Invalid value" });
     }
 
