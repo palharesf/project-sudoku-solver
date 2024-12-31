@@ -44,5 +44,21 @@ module.exports = function (app) {
     }
   });
 
-  app.route("/api/solve").post((req, res) => {});
+  app.route("/api/solve").post((req, res) => {
+    if (!req.body.puzzle) {
+      return res.json({ error: "Required field missing" });
+    }
+
+    const validPuzzle = solver.validate(req.body.puzzle);
+    if (validPuzzle !== true) {
+      return res.json(validPuzzle);
+    }
+
+    const solution = solver.solve(req.body.puzzle);
+    if (!solution) {
+      return res.json({ error: "Puzzle cannot be solved" });
+    } else {
+      return res.json({ solution: solution });
+    }
+  });
 };
