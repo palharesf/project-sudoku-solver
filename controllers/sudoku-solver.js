@@ -1,13 +1,13 @@
 class SudokuSolver {
 
   validate(puzzleString) {
-    if (!Array.isArray(puzzleString) || puzzleString.length !== 81) {
-      return false;
+    if (puzzleString.length !== 81) {
+      return { error: "Expected puzzle to be 81 characters long" };
     }
     const validChars = /^[1-9.]$/;
     for (let char of puzzleString) {
       if (!validChars.test(char)) {
-        return false;
+        return { error: "Invalid characters in puzzle" };
       }
     }
     return true;
