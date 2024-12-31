@@ -46,6 +46,9 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
+    let validPuzzle = this.validate(puzzleString);
+    if (validPuzzle !== true) return validPuzzle;
+    
     let puzzle = puzzleString.split('');
     for (let i = 0; i < 81; i++) {
       if (puzzle[i] === '.') {
