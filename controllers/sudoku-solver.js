@@ -17,6 +17,7 @@ class SudokuSolver {
     let startCol = ((row - 1) * 9);
     let endCol = startCol + 9;
     let rowValues = puzzleString.slice(startCol, endCol);
+    if (rowValues[column - 1] === value) return true;
     return rowValues.indexOf(value) === -1;
   }
 
@@ -25,6 +26,7 @@ class SudokuSolver {
     for (let i = 0; i < 9; i++) {
       colValues.push(puzzleString[column - 1 + (i * 9)]);
     }
+    if (colValues[row - 1] === value) return true;
     return colValues.indexOf(value) === -1;
   }
 
@@ -36,6 +38,9 @@ class SudokuSolver {
       for (let j = 0; j < 3; j++) {
         regionValues.push(puzzleString[(regionRow + i) * 9 + (regionCol + j)]);
       }
+    }
+    if (regionValues[(row - 1) % 3 * 3 + (column - 1) % 3] === value) {
+      return true;
     }
     return regionValues.indexOf(value) === -1;
   }
