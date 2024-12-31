@@ -1,19 +1,43 @@
 class SudokuSolver {
 
   validate(puzzleString) {
-    // The validate function should take a given puzzle string and check it to see if it has 81 valid characters for the input.
+    if (!Array.isArray(puzzleString) || puzzleString.length !== 81) {
+      return false;
+    }
+    const validChars = /^[1-9.]$/;
+    for (let char of puzzleString) {
+      if (!validChars.test(char)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
-// The check functions should be validating against the current state of the board.
+    let startCol = ((row - 1) * 9);
+    let endCol = startCol + 9;
+    let rowValues = puzzleString.slice(startCol, endCol);
+    return rowValues.indexOf(value) === -1;
   }
 
   checkColPlacement(puzzleString, row, column, value) {
-    // The check functions should be validating against the current state of the board.
+    let colValues = [];
+    for (let i = 0; i < 9; i++) {
+      colValues.push(puzzleString[column - 1 + (i * 9)]);
+    }
+    return colValues.indexOf(value) === -1;
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    // The check functions should be validating against the current state of the board.
+    let regionRow = Math.floor((row - 1) / 3) * 3;
+    let regionCol = Math.floor((column - 1) / 3) * 3;
+    let regionValues = [];
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        regionValues.push(puzzleString[(regionRow + i) * 9 + (regionCol + j)]);
+      }
+    }
+    return regionValues.indexOf(value) === -1;
   }
 
   solve(puzzleString) {
