@@ -41,7 +41,23 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-    // The solve function should handle solving any given valid puzzle string, not just the test inputs and solutions. You are expected to write out the logic to solve this.
+    let puzzle = puzzleString.split('');
+    for (let i = 0; i < 81; i++) {
+      if (puzzle[i] === '.') {
+        for (let val = 1; val <= 9; val++) {
+          if (this.checkRowPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString()) &&
+              this.checkColPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString()) &&
+              this.checkRegionPlacement(puzzle.join(''), Math.floor(i / 9) + 1, i % 9 + 1, val.toString())) {
+            puzzle[i] = val.toString();
+            const solved = this.solve(puzzle.join(''));
+            if (solved) return solved;
+            puzzle[i] = '.';
+          }
+        }
+        return false;
+      }
+    }
+    return puzzle.join('');
   }
 }
 
